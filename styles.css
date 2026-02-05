@@ -144,6 +144,27 @@ h2 {
   padding: 48px;
 }
 
+/* Limit card width */
+.grid .card {
+  max-width: 400px;  /* each card won’t exceed 400px wide */
+  margin: 0 auto;
+}
+
+/* Make portfolio media scale nicely */
+.card img,
+.card video {
+  width: 100%;       /* fill the card width */
+  height: auto;      /* maintain aspect ratio */
+  border-radius: 12px; /* match card rounding */
+  object-fit: cover; /* crop nicely if needed */
+  margin-bottom: 12px;
+}
+
+/* Optional: max height for video to avoid huge tall players */
+.card video {
+  max-height: 300px;
+}
+
 /* Footer */
 .footer {
   border-top: 1px solid var(--border);
