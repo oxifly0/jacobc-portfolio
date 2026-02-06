@@ -10,6 +10,73 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Commission Form Styles */
+    #commissionForm {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 600px;
+      margin: 40px auto;
+    }
+
+    #commissionForm label {
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    #commissionForm input,
+    #commissionForm select,
+    #commissionForm textarea {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px;
+      border-radius: 12px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+    }
+
+    #commissionForm input::placeholder,
+    #commissionForm textarea::placeholder {
+      color: var(--text-muted);
+    }
+
+    #commissionForm input:focus,
+    #commissionForm select:focus,
+    #commissionForm textarea:focus {
+      outline: none;
+      border-color: #fff;
+    }
+
+    #commissionForm button {
+      width: 100%;
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    #errorMessage {
+      text-align: center;
+      font-weight: 600;
+    }
+
+    /* PayPal container styling */
+    #paypal-button-container {
+      max-width: 400px;
+      margin: 20px auto 0 auto;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 640px) {
+      #commissionForm {
+        padding: 24px;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -27,17 +94,79 @@
 <main class="container">
   <section class="commission">
     <h1>Request a Commission</h1>
-    <p>
-      Submit your project details and I’ll get back to you with availability and pricing.
-    </p>
+    <p>Submit your project details and enter the commission code to continue to payment.</p>
 
-    <a href="#" class="button primary">Open Commission Form</a>
+    <form id="commissionForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" placeholder="Your name" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" placeholder="Your email" required>
+
+      <label for="service">Service Type:</label>
+      <select id="service" name="service" required>
+        <option value="">Select a service</option>
+        <option value="scripting">Roblox Scripting</option>
+        <option value="animation">Animation</option>
+        <option value="building">Building / 3D Modeling</option>
+        <option value="ui">UI Design</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="description">Project Description:</label>
+      <textarea id="description" name="description" rows="5" placeholder="Describe your project..." required></textarea>
+
+      <label for="code">Commission Code:</label>
+      <input type="text" id="code" name="code" placeholder="Enter commission code" required>
+
+      <button type="submit" class="button primary">Submit & Pay</button>
+    </form>
+
+    <div id="paypal-button-container" style="display:none;"></div>
+    <p id="errorMessage" style="color:#ff6b6b; display:none;">Invalid commission code!</p>
   </section>
 </main>
 
 <footer class="footer">
   <p>© 2026 Jacob C · Independent Roblox Developer</p>
 </footer>
+
+<script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=USD"></script>
+<script>
+const commissionCode = "JACOBCOMMISSION2026";
+const form = document.getElementById("commissionForm");
+const paypalContainer = document.getElementById("paypal-button-container");
+const errorMessage = document.getElementById("errorMessage");
+
+form.addEventListener("submit", function(e) {
+  e.preventDefault(); // stop normal submission
+
+  const codeInput = document.getElementById("code").value.trim();
+
+  if(codeInput !== commissionCode) {
+    errorMessage.style.display = "block";
+    paypalContainer.style.display = "none";
+    return;
+  }
+
+  errorMessage.style.display = "none";
+  paypalContainer.style.display = "block";
+
+  // Render PayPal button
+  paypal.Buttons({
+    createOrder: (data, actions) => actions.order.create({
+      purchase_units: [{
+        amount: { value: '10.00' } // example fixed amount, can be dynamic
+      }]
+    }),
+    onApprove: (data, actions) => actions.order.capture().then(details => {
+      alert(`Payment completed! Thank you, ${details.payer.name.given_name}`);
+      form.reset();
+      paypalContainer.style.display = "none";
+    })
+  }).render('#paypal-button-container');
+});
+</script>
 
 </body>
 </html>
