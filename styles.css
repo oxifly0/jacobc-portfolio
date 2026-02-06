@@ -17,7 +17,70 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 32px 16px;
+
+  section {
+  margin-bottom: 64px;
 }
+}
+
+/* ---------- Re-Added Fixes ---------- */
+
+.hero {
+  padding: 72px 0 48px;
+}
+
+.hero h1 {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.hero p {
+  max-width: 600px;
+  color: #b3b3b3;
+}
+
+.hero-buttons {
+  margin-top: 24px;
+}
+
+/* ---------- Navbar ---------- */
+.navbar {
+  border-bottom: 1px solid #1f1f1f;
+}
+
+.navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+nav a {
+  margin-left: 16px;
+  color: #b3b3b3;
+}
+
+nav a:hover {
+  color: #ffffff;
+}
+
+/* ---------- Services List ---------- */
+
+.services {
+  list-style: none;
+  padding: 0;
+}
+
+.services li {
+  padding: 12px 0;
+  border-bottom: 1px solid #1f1f1f;
+}
+
+
 
 /* ---------- Scroll-in animation ---------- */
 .reveal {
@@ -130,12 +193,22 @@ body {
   transform: scale(1.05);
 }
 
+/* ---------- Footer ---------- */
+
+.footer {
+  border-top: 1px solid #1f1f1f;
+  text-align: center;
+  color: #b3b3b3;
+  padding: 24px;
+}
+
+
 /* ---------- Mobile Tweaks ---------- */
 @media (max-width: 480px) {
   .container {
     padding: 24px 12px;
   }
-
+  
   .grid {
     gap: 16px;
   }
