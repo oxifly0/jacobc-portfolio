@@ -16,11 +16,6 @@ body {
   color: var(--text);
   font-family: 'Montserrat', system-ui, sans-serif;
   line-height: 1.6;
-  background-image: url('assets/images/subtle-grid.jpg'); /* optional subtle pattern */ 
-  background-image-transparent: 0.05; /* make the pattern very faint */
-  background-repeat: repeat;
-  background-size: cover;
-
 }
 
 a {
