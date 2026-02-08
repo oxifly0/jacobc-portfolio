@@ -18,45 +18,48 @@
 
  <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const words = ["Builder", "Animator", "3D Modeler", "UI/UX Designer"];
+  const words = ["Builder", "Animator", "3D Modeler"];
   const typedElement = document.getElementById("typed-text");
 
-  let i = 0; // word index
-  let j = 0; // character index
-  let currentWord = "";
+  if (!typedElement) return; // safety guard
+
+  let wordIndex = 0;
+  let charIndex = 0;
   let isDeleting = false;
-  const speed = 150;
 
-  function type() {
-    const fullWord = words[i];
+  const typingSpeed = 120;
+  const deletingSpeed = 70;
+  const pauseAfterTyping = 1200;
+  const pauseAfterDeleting = 400;
 
-    if (isDeleting) {
-      currentWord = fullWord.substring(0, j);
-      j--;
+  function typeLoop() {
+    const word = words[wordIndex];
+
+    if (!isDeleting) {
+      typedElement.textContent = word.slice(0, charIndex + 1);
+      charIndex++;
+
+      if (charIndex === word.length) {
+        setTimeout(() => (isDeleting = true), pauseAfterTyping);
+      }
     } else {
-      currentWord = fullWord.substring(0, j);
-      j++;
+      typedElement.textContent = word.slice(0, charIndex - 1);
+      charIndex--;
+
+      if (charIndex === 0) {
+        isDeleting = false;
+        wordIndex = (wordIndex + 1) % words.length;
+        setTimeout(() => {}, pauseAfterDeleting);
+      }
     }
 
-    typedElement.textContent = currentWord;
-
-    if (!isDeleting && j > fullWord.length) {
-      isDeleting = true;
-      setTimeout(type, 1000); // pause at end
-    } else if (isDeleting && j < 0) {
-      isDeleting = false;
-      i = (i + 1) % words.length;
-      j = 0;
-      setTimeout(type, 300); // small pause before next word
-      return; // skip the setTimeout below to avoid double call
-    }
-
-    setTimeout(type, isDeleting ? speed / 2 : speed);
+    setTimeout(typeLoop, isDeleting ? deletingSpeed : typingSpeed);
   }
 
-  type();
+  typeLoop();
 });
 </script>
+
 
 
 <script>
@@ -102,7 +105,7 @@ faders.forEach(fader => {
 
     <!-- Hero -->
     <section class="hero">
-      <h1>Roblox Developer<span id="typed-text"></span></h1>
+      <h1>I am a <span id="typed-text"></span></h1>
       
       <!-- Hero buttons now link to pages -->
 <div class="hero-buttons">
