@@ -11,6 +11,66 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css" />
+
+  <script>
+const words = ["Builder", "Animator", "3D Modeler", "UI/UX Designer"];
+let i = 0;
+let j = 0;
+let currentWord = '';
+let isDeleting = false;
+const speed = 150;
+const typedElement = document.getElementById('typed-text');
+
+function type() {
+  const fullWord = words[i];
+  
+  if (isDeleting) {
+    currentWord = fullWord.substring(0, j--);
+  } else {
+    currentWord = fullWord.substring(0, j++);
+  }
+
+  typedElement.textContent = currentWord;
+
+  if (!isDeleting && j === fullWord.length + 1) {
+    isDeleting = true;
+    setTimeout(type, 1000); // pause at end
+  } else if (isDeleting && j === 0) {
+    isDeleting = false;
+    i = (i + 1) % words.length;
+  }
+  
+  setTimeout(type, isDeleting ? speed / 2 : speed);
+}
+
+type();
+</script>
+
+<script>
+const faders = document.querySelectorAll('.card, .portfolio-card, section');
+
+const appearOptions = {
+  threshold: 0.1,
+  rootMargin: "0px 0px -50px 0px"
+};
+
+const appearOnScroll = new IntersectionObserver(function(entries, observer){
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.style.opacity = 1;
+    entry.target.style.transform = 'translateY(0)';
+    observer.unobserve(entry.target);
+  });
+}, appearOptions);
+
+faders.forEach(fader => {
+  fader.style.opacity = 0;
+  fader.style.transform = 'translateY(20px)';
+  appearOnScroll.observe(fader);
+});
+</script>
+
+
 </head>
 <body>
 
@@ -29,7 +89,7 @@
 
     <!-- Hero -->
     <section class="hero">
-      <h1>Roblox Developer</h1>
+      <h1>Roblox Developer <span id="typed-text"></span></h1>
       <p>
         I build reliable, production-ready Roblox systems with a focus on
         performance, realism, and long-term maintainability.

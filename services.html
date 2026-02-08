@@ -1,5 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<script>
+const faders = document.querySelectorAll('.card, .portfolio-card, section');
+
+const appearOptions = {
+  threshold: 0.1,
+  rootMargin: "0px 0px -50px 0px"
+};
+
+const appearOnScroll = new IntersectionObserver(function(entries, observer){
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.style.opacity = 1;
+    entry.target.style.transform = 'translateY(0)';
+    observer.unobserve(entry.target);
+  });
+}, appearOptions);
+
+faders.forEach(fader => {
+  fader.style.opacity = 0;
+  fader.style.transform = 'translateY(20px)';
+  appearOnScroll.observe(fader);
+});
+</script>
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -60,6 +85,29 @@
     </div>
   </section>
 
+  <section>
+  <h2>Past Experiences</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Northminster Roleplay</h3>
+      <p>Built complex emergency service systems and UI for large roleplay servers.</p>
+      <span class="tag">Scripting, UI</span>
+    </div>
+
+    <div class="card">
+      <h3>Independent Projects</h3>
+      <p>Designed and implemented custom Roblox maps, animations, and models for clients worldwide.</p>
+      <span class="tag">Building, Animation, 3D Modelling</span>
+    </div>
+
+    <div class="card">
+      <h3>MDT System for RP Servers</h3>
+      <p>Developed Mobile Data Terminal animations and systems for realistic roleplay experience.</p>
+      <span class="tag">Animation, Systems</span>
+    </div>
+  </div>
+</section>
+
   <!-- Commission CTA -->
   <section class="commission" style="text-align:center;">
     <h2>Start Your Project</h2>
@@ -67,6 +115,7 @@
     <a href="commission.html" class="button primary">Commission Now</a>
   </section>
 </main>
+
 
 
 <footer class="footer">

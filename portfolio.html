@@ -10,6 +10,31 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css" />
+
+  <script>
+const faders = document.querySelectorAll('.card, .portfolio-card, section');
+
+const appearOptions = {
+  threshold: 0.1,
+  rootMargin: "0px 0px -50px 0px"
+};
+
+const appearOnScroll = new IntersectionObserver(function(entries, observer){
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.style.opacity = 1;
+    entry.target.style.transform = 'translateY(0)';
+    observer.unobserve(entry.target);
+  });
+}, appearOptions);
+
+faders.forEach(fader => {
+  fader.style.opacity = 0;
+  fader.style.transform = 'translateY(20px)';
+  appearOnScroll.observe(fader);
+});
+</script>
+
 </head>
 <body>
 
