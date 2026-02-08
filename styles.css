@@ -16,8 +16,7 @@ body {
   color: var(--text);
   font-family: 'Montserrat', system-ui, sans-serif;
   line-height: 1.6;
-  background: linear-gradient(135deg, #0B0B0B 0%, #121212 100%);
-  background-image: url('assets/images/subtle-grid.png'); /* optional subtle pattern */
+  background-image: url('assets/images/subtle-grid.jpg'); /* optional subtle pattern */
   background-repeat: repeat;
   background-size: cover;
 
