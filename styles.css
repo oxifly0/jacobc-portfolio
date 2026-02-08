@@ -201,6 +201,56 @@ h2 {
   box-shadow: 0 12px 25px rgba(0,0,0,0.6);
 }
 
+.portfolio-section {
+  margin-bottom: 80px;
+}
+
+.portfolio-section h2 {
+  font-size: 1.6rem;
+  margin-bottom: 24px;
+  color: var(--text);
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.portfolio-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.portfolio-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.portfolio-card img,
+.portfolio-card video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #111;
+}
+
+.tag {
+  align-self: flex-start;
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
+}
+
 /* Footer */
 .footer {
   border-top: 1px solid var(--border);
