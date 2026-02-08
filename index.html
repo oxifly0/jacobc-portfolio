@@ -16,39 +16,48 @@
 
   <link rel="stylesheet" href="styles.css" />
 
-  <script>
-const words = ["Builder", "Animator", "3D Modeler", "UI/UX Designer"];
-let i = 0;
-let j = 0;
-let currentWord = '';
-let isDeleting = false;
-const speed = 150;
-const typedElement = document.getElementById('typed-text');
+ <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const words = ["Builder", "Animator", "3D Modeler", "UI/UX Designer"];
+  const typedElement = document.getElementById("typed-text");
 
-function type() {
-  const fullWord = words[i];
-  
-  if (isDeleting) {
-    currentWord = fullWord.substring(0, j--);
-  } else {
-    currentWord = fullWord.substring(0, j++);
+  let i = 0; // word index
+  let j = 0; // character index
+  let currentWord = "";
+  let isDeleting = false;
+  const speed = 150;
+
+  function type() {
+    const fullWord = words[i];
+
+    if (isDeleting) {
+      currentWord = fullWord.substring(0, j);
+      j--;
+    } else {
+      currentWord = fullWord.substring(0, j);
+      j++;
+    }
+
+    typedElement.textContent = currentWord;
+
+    if (!isDeleting && j > fullWord.length) {
+      isDeleting = true;
+      setTimeout(type, 1000); // pause at end
+    } else if (isDeleting && j < 0) {
+      isDeleting = false;
+      i = (i + 1) % words.length;
+      j = 0;
+      setTimeout(type, 300); // small pause before next word
+      return; // skip the setTimeout below to avoid double call
+    }
+
+    setTimeout(type, isDeleting ? speed / 2 : speed);
   }
 
-  typedElement.textContent = currentWord;
-
-  if (!isDeleting && j === fullWord.length + 1) {
-    isDeleting = true;
-    setTimeout(type, 1000); // pause at end
-  } else if (isDeleting && j === 0) {
-    isDeleting = false;
-    i = (i + 1) % words.length;
-  }
-  
-  setTimeout(type, isDeleting ? speed / 2 : speed);
-}
-
-type();
+  type();
+});
 </script>
+
 
 <script>
 const faders = document.querySelectorAll('.card, .portfolio-card, section');
@@ -93,12 +102,8 @@ faders.forEach(fader => {
 
     <!-- Hero -->
     <section class="hero">
-      <h1>Roblox Developerr<span id="typed-text"></span></h1>
-      <p>
-        I build reliable, production-ready Roblox systems with a focus on
-        performance, realism, and long-term maintainability.
-      </p>
-
+      <h1>Roblox Developer<span id="typed-text"></span></h1>
+      
       <!-- Hero buttons now link to pages -->
 <div class="hero-buttons">
   <a href="portfolio.html" class="button primary">View Portfolio</a>
