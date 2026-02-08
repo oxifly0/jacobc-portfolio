@@ -170,7 +170,23 @@ h2 {
 .card video {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+/* Commission form submit */
 
+#submitBtn {
+  background: #fff;
+  color: #000;
+  border: none;
+  border-radius: 999px;
+  padding: 14px 22px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#submitBtn:hover {
+  opacity: 0.9;
+}
+
+/* Add a subtle zoom and shadow on hover for portfolio media */
 .card img:hover,
 .card video:hover {
   transform: scale(1.05); /* slight zoom */

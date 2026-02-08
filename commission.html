@@ -62,12 +62,7 @@
     #errorMessage {
       text-align: center;
       font-weight: 600;
-    }
-
-    /* PayPal container styling */
-    #paypal-button-container {
-      max-width: 400px;
-      margin: 20px auto 0 auto;
+      color: #ff6b6b;
     }
 
     /* Responsive adjustments */
@@ -94,7 +89,7 @@
 <main class="container">
   <section class="commission">
     <h1>Request a Commission</h1>
-    <p>Submit your project details and enter the commission code to continue to payment.</p>
+    <p>Submit your project details, enter the commission code, and the amount provided in DM to pay securely via PayPal.</p>
 
     <form id="commissionForm">
       <label for="name">Name:</label>
@@ -106,10 +101,9 @@
       <label for="service">Service Type:</label>
       <select id="service" name="service" required>
         <option value="">Select a service</option>
-        <option value="scripting">Roblox Scripting</option>
         <option value="animation">Animation</option>
         <option value="building">Building / 3D Modeling</option>
-        <option value="ui">UI Design</option>
+        <option value="modelling">3D Modelling</option>
         <option value="other">Other</option>
       </select>
 
@@ -119,11 +113,24 @@
       <label for="code">Commission Code:</label>
       <input type="text" id="code" name="code" placeholder="Enter commission code" required>
 
-      <button type="submit" class="button primary">Submit & Pay</button>
+      <label for="amount">Amount (USD):</label>
+       <input
+        type="number"
+        id="amount"
+        name="amount"
+        placeholder="Enter amount provided by Jacob"
+        min="1"
+        step="0.01"
+        required
+        >
+
+      <button type="submit" id="submitBtn">Submit & Pay</button>
     </form>
 
-    <div id="paypal-button-container" style="display:none;"></div>
-    <p id="errorMessage" style="color:#ff6b6b; display:none;">Invalid commission code!</p>
+    <p id="errorMessage" style="display:none;">Invalid commission code!</p>
+    <p id="infoMessage" style="display:none; color:#A3A3A3; text-align:center; margin-top:10px;">
+      You will be redirected to PayPal to complete your payment.
+    </p>
   </section>
 </main>
 
@@ -131,40 +138,31 @@
   <p>© 2026 Jacob C · Independent Roblox Developer</p>
 </footer>
 
-<script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=USD"></script>
 <script>
 const commissionCode = "JACOBCOMMISSION2026";
-const form = document.getElementById("commissionForm");
-const paypalContainer = document.getElementById("paypal-button-container");
-const errorMessage = document.getElementById("errorMessage");
+const paypalUsername = "JacobCrowe826";
 
-form.addEventListener("submit", function(e) {
-  e.preventDefault(); // stop normal submission
+const form = document.getElementById("commissionForm");
+const errorMessage = document.getElementById("errorMessage");
+const infoMessage = document.getElementById("infoMessage");
+
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
 
   const codeInput = document.getElementById("code").value.trim();
+  const amountInput = document.getElementById("amount").value;
 
-  if(codeInput !== commissionCode) {
+  if (codeInput !== commissionCode || !amountInput || Number(amountInput) <= 0) {
     errorMessage.style.display = "block";
-    paypalContainer.style.display = "none";
+    infoMessage.style.display = "none";
     return;
   }
 
   errorMessage.style.display = "none";
-  paypalContainer.style.display = "block";
+  infoMessage.style.display = "block";
 
-  // Render PayPal button
-  paypal.Buttons({
-    createOrder: (data, actions) => actions.order.create({
-      purchase_units: [{
-        amount: { value: '10.00' } // example fixed amount, can be dynamic
-      }]
-    }),
-    onApprove: (data, actions) => actions.order.capture().then(details => {
-      alert(`Payment completed! Thank you, ${details.payer.name.given_name}`);
-      form.reset();
-      paypalContainer.style.display = "none";
-    })
-  }).render('#paypal-button-container');
+  const paypalLink = `https://www.paypal.me/${paypalUsername}/${Number(amountInput).toFixed(2)}`;
+  window.location.href = paypalLink;
 });
 </script>
 
