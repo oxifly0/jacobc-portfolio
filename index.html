@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const typingSpeed = 130;
   const deletingSpeed = 70;
   const pauseAfterTyping = 2000;
+  
   const pauseAfterDeleting = 400;
 
   function typeLoop() {
@@ -54,6 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     setTimeout(typeLoop, isDeleting ? deletingSpeed : typingSpeed);
+    
   }
 
   typeLoop();
